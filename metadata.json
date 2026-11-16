@@ -1,0 +1,8 @@
+{
+  "name": "RIYA",
+  "description": "Universal Personal AI Assistant with voice orchestration, persistent memories, autonomous multi-step tasks, productivity tools, and security trust controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

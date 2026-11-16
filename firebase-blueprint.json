@@ -1,0 +1,197 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated RIYA user preferences and profile configuration.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "themeMode": { "type": "string", "enum": ["dark", "light"] },
+        "defaultStartupMode": { "type": "string", "enum": ["text", "continuous", "push_to_talk"] },
+        "voiceLanguage": { "type": "string", "enum": ["en", "hi", "mr", "auto"] },
+        "responseStyle": { "type": "string", "enum": ["friendly", "calm", "excited", "empathetic", "professional"] },
+        "waveformAnimationsEnabled": { "type": "boolean" },
+        "autoMemoryRecallEnabled": { "type": "boolean" },
+        "voiceResponsesEnabled": { "type": "boolean" },
+        "preferredModel": { "type": "string", "enum": ["gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-4-argon"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "themeMode",
+        "defaultStartupMode",
+        "voiceLanguage",
+        "responseStyle",
+        "waveformAnimationsEnabled",
+        "autoMemoryRecallEnabled",
+        "voiceResponsesEnabled",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Immutable conversation transcript message in RIYA.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "assistant"] },
+        "text": { "type": "string" },
+        "latencyMs": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "sessionId", "role", "text", "latencyMs", "createdAt"]
+    },
+    "MemoryFact": {
+      "title": "MemoryFact",
+      "description": "User-scoped persistent memory fact or preference.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "category": {
+          "type": "string",
+          "enum": ["general", "user_profile", "preferences", "personal_instructions", "important_facts", "work"]
+        },
+        "key": { "type": "string" },
+        "value": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "category", "key", "value", "createdAt", "updatedAt"]
+    },
+    "PersonalTask": {
+      "title": "PersonalTask",
+      "description": "User-scoped personal productivity task.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"] },
+        "status": { "type": "string", "enum": ["pending", "in_progress", "completed", "cancelled"] },
+        "category": { "type": "string" },
+        "dueDateLabel": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "title", "description", "priority", "status", "category", "dueDateLabel", "createdAt", "updatedAt"]
+    },
+    "ReminderItem": {
+      "title": "ReminderItem",
+      "description": "Time-based user reminder with optional recurrence.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "triggerLabel": { "type": "string" },
+        "recurringRule": { "type": "string", "enum": ["none", "daily", "weekdays", "weekly", "monthly"] },
+        "status": { "type": "string", "enum": ["pending", "triggered", "snoozed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "title", "triggerLabel", "recurringRule", "status", "createdAt", "updatedAt"]
+    },
+    "PersonalNote": {
+      "title": "PersonalNote",
+      "description": "User-scoped markdown note with category and pin state.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "pinned": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "title", "content", "category", "pinned", "createdAt", "updatedAt"]
+    },
+    "AutonomousTaskRun": {
+      "title": "AutonomousTaskRun",
+      "description": "Autonomous multi-step AI task execution record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "goal": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "running", "awaiting_confirmation", "completed", "failed", "cancelled"] },
+        "stepsSummary": { "type": "string" },
+        "stepsCompleted": { "type": "integer" },
+        "stepsTotal": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "goal", "status", "stepsSummary", "stepsCompleted", "stepsTotal", "createdAt", "updatedAt"]
+    },
+    "PermissionRule": {
+      "title": "PermissionRule",
+      "description": "User-configured capability trust and authorization rule.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "permissionKey": { "type": "string" },
+        "decision": { "type": "string", "enum": ["allow", "confirm", "deny"] },
+        "lifetime": { "type": "string", "enum": ["one_time", "session", "time_limited", "persistent"] },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "permissionKey", "decision", "lifetime", "reason", "createdAt", "updatedAt"]
+    },
+    "SecurityAuditEntry": {
+      "title": "SecurityAuditEntry",
+      "description": "Append-only security audit record of capability checks and rule mutations.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "permissionKey": { "type": "string" },
+        "decision": { "type": "string", "enum": ["allow", "confirm", "deny"] },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp via FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "permissionKey", "decision", "reason", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Authenticated user preferences and profile."
+    },
+    "/users/{userId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Conversation messages scoped to the user."
+    },
+    "/users/{userId}/memories/{memoryId}": {
+      "schema": { "$ref": "#/entities/MemoryFact" },
+      "description": "Persistent user memories scoped to the user."
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/PersonalTask" },
+      "description": "Personal productivity tasks scoped to the user."
+    },
+    "/users/{userId}/reminders/{reminderId}": {
+      "schema": { "$ref": "#/entities/ReminderItem" },
+      "description": "User reminders scoped to the user."
+    },
+    "/users/{userId}/notes/{noteId}": {
+      "schema": { "$ref": "#/entities/PersonalNote" },
+      "description": "Personal markdown notes scoped to the user."
+    },
+    "/users/{userId}/autonomous_runs/{runId}": {
+      "schema": { "$ref": "#/entities/AutonomousTaskRun" },
+      "description": "Autonomous multi-step task execution logs scoped to the user."
+    },
+    "/users/{userId}/permission_rules/{ruleId}": {
+      "schema": { "$ref": "#/entities/PermissionRule" },
+      "description": "Capability permission rules scoped to the user."
+    },
+    "/users/{userId}/audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/SecurityAuditEntry" },
+      "description": "Append-only security audit logs scoped to the user."
+    }
+  }
+}

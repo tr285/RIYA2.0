@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">RIYA</string>
+    <string name="auth_hero_content_desc">RIYA personal AI assistant banner</string>
+    <string name="auth_welcome_title">Meet RIYA</string>
+    <string name="auth_welcome_subtitle">Your personal AI assistant with cloud-isolated memory, voice mode, autonomous task planning, and explicit capability governance.</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_memories">Memories</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_studio">Studio</string>
+    <string name="nav_permissions">Trust</string>
+    <string name="nav_diagnostics">System</string>
+    <string name="nav_settings">Settings</string>
+    <string name="error_generic_retry">Something went wrong. Please try again.</string>
+</resources>
